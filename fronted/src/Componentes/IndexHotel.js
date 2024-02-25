@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const IndexHotel = () => {
   // Estado para almacenar los hoteles
@@ -40,7 +41,13 @@ const IndexHotel = () => {
   return (
     <div>
       <h1>Hoteles</h1>
-
+      <ul>
+        <li><Link to="/">Inicio</Link></li>
+        <li><Link to="/Hoteles">Hoteles</Link></li>
+        <li><Link to="/Clientes">Clientes</Link></li>
+        <li><Link to="/Habitacion">Habitaciones</Link></li>
+        <li><Link to="/Reservacion">Reservaciones</Link></li>
+      </ul>
       {/* Formulario para crear hoteles */}
       <h2>Crear Hotel</h2>
       {/* Implementa los campos y lógica de entrada del formulario aquí */}
