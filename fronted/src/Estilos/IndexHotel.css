@@ -1,61 +1,103 @@
+/* Estilos generales */
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f2f2f2;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
-h1 {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    margin: 0;
+h1, h2, h3 {
+  font-weight: normal;
+  margin-bottom: 10px;
 }
 
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background-color: #333;
-    text-align: center;
+a {
+  text-decoration: none;
+  color: #0073b7;
 }
 
-li {
-    display: inline-block;
-    margin-right: 20px;
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-li a {
-    display: block;
-    color: #fff;
-    text-decoration: none;
-    padding: 10px;
-    transition: background-color 0.3s ease;
+/* Contenedor principal del componente IndexHotel */
+
+body {
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
 }
 
-li a:hover {
-    background-color: #555;
+/* Elimina el estilo anterior para .container */
+.container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.content {
-    margin: 20px;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
+/* ... (resto de tus estilos) */
+
+
+/* Barra de navegación */
+
+.navbar {
+  background-color: #0073b7;
+  padding: 10px 0;
+  text-align: center;
 }
 
-.back-button {
-    display: inline-block;
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    text-decoration: none;
-    margin-top: 10px;
-    transition: background-color 0.3s ease;
+.navbar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
-.back-button:hover {
-    background-color: #555;
+.navbar li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.navbar li a {
+  font-size: 16px;
+  color: white;
+  text-decoration: none;
+}
+
+/* Sección principal del componente IndexHotel */
+
+.locationCategories {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+.hotelTable {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ddd;
+  margin-top: 20px;
+}
+
+.hotelTable th,
+.hotelTable td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.hotelTable th {
+  background-color: #0073b7;
+  color: white;
+}
+
+/* Media queries */
+
+@media (max-width: 768px) {
+  .navbar {
+    padding: 5px 0;
+  }
 }

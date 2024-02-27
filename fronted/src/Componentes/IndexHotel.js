@@ -1,86 +1,105 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import '../Estilos/IndexHotel.css'; // Asegúrate de tener la ruta correcta al archivo CSS
 
 const IndexHotel = () => {
-  // Estado para almacenar los hoteles
-  const [hoteles, setHoteles] = useState([]);
+  const navigate = useNavigate();
 
-  // Efecto para cargar los hoteles al montar el componente
-  useEffect(() => {
-    updateHotelesTable();
-  }, []); // La dependencia vacía asegura que el efecto se ejecute solo una vez al montar el componente
+  // Estado para almacenar los hoteles, la ubicación de búsqueda y nuevo hotel
+  const [hoteles, setHoteles] = useState([
+    { id_hotel: 1, ubicacion_hotel: 'Quito', numerohabitaciones_hotel: 100, categoria_hotel: '5 estrellas', nombre_hotel: 'Hotel Ejemplo Quito' },
+    { id_hotel: 2, ubicacion_hotel: 'Guayaquil', numerohabitaciones_hotel: 80, categoria_hotel: '4 estrellas', nombre_hotel: 'Hotel Ejemplo Guayaquil' },
+    { id_hotel: 3, ubicacion_hotel: 'Cuenca', numerohabitaciones_hotel: 120, categoria_hotel: '3 estrellas', nombre_hotel: 'Hotel Ejemplo Cuenca' },
+    { id_hotel: 4, ubicacion_hotel: 'Galápagos', numerohabitaciones_hotel: 50, categoria_hotel: '5 estrellas', nombre_hotel: 'Hotel Ejemplo Galápagos' },
+    { id_hotel: 5, ubicacion_hotel: 'Manta', numerohabitaciones_hotel: 90, categoria_hotel: '4 estrellas', nombre_hotel: 'Hotel Ejemplo Manta' },
+    { id_hotel: 6, ubicacion_hotel: 'Quito', numerohabitaciones_hotel: 100, categoria_hotel: '5 estrellas', nombre_hotel: 'Hotel Ejemplo Quito' },
+    { id_hotel: 7, ubicacion_hotel: 'Guayaquil', numerohabitaciones_hotel: 80, categoria_hotel: '4 estrellas', nombre_hotel: 'Hotel Ejemplo Guayaquil' },
+    { id_hotel: 8, ubicacion_hotel: 'Cuenca', numerohabitaciones_hotel: 120, categoria_hotel: '3 estrellas', nombre_hotel: 'Hotel Ejemplo Cuenca' },
+    { id_hotel: 9, ubicacion_hotel: 'Galápagos', numerohabitaciones_hotel: 50, categoria_hotel: '5 estrellas', nombre_hotel: 'Hotel Ejemplo Galápagos' },
+    { id_hotel: 510, ubicacion_hotel: 'Manta', numerohabitaciones_hotel: 90, categoria_hotel: '4 estrellas', nombre_hotel: 'Hotel Ejemplo Manta' },
+  
+  ]);
+  const [ubicacionBusqueda, setUbicacionBusqueda] = useState('');
+  const [nuevoHotel, setNuevoHotel] = useState({
+    nombre_hotel: '',
+    ubicacion_hotel: '',
+    numerohabitaciones_hotel: 0,
+    categoria_hotel: '',
+  });
 
-  // Función para crear un nuevo hotel
-  const createHotel = () => {
-    // Implementa la lógica de creación de hoteles aquí
-    // Puedes utilizar fetch o axios para realizar una petición al servidor
-    // Actualiza el estado después de crear el hotel
-    updateHotelesTable();
+  // Función para manejar cambios en el campo de búsqueda
+  const handleSearchChange = (e) => {
+    setUbicacionBusqueda(e.target.value);
   };
 
-  // Función para eliminar un hotel
-  const deleteHotel = (idHotel) => {
-    // Implementa la lógica de eliminación de hoteles aquí
-    // Puedes utilizar fetch o axios para realizar una petición al servidor
-    // Actualiza el estado después de eliminar el hotel
-    updateHotelesTable();
+  // Función para manejar cambios en el formulario de nuevo hotel
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setNuevoHotel((prevHotel) => ({ ...prevHotel, [name]: value }));
   };
 
-  // Función para cargar los hoteles
-  const updateHotelesTable = () => {
-    // Implementa la lógica para obtener los hoteles desde el servidor
-    // Puedes utilizar fetch o axios para realizar una petición al servidor
-    // Actualiza el estado con los hoteles obtenidos
-    const mockHoteles = [
-      { id_hotel: 1, ubicacion_hotel: 'Quito', numerohabitaciones_hotel: 100, categoria_hotel: '5 estrellas', nombre_hotel: 'Hotel Ejemplo' },
-      // Otros hoteles
-    ];
-    setHoteles(mockHoteles);
+  // Función para manejar la selección de un hotel y redirigir a las habitaciones
+  const handleHotelSelection = (idHotel) => {
+    // Puedes personalizar la ruta según tu estructura de rutas
+    // navigate(`/habitaciones/${idHotel}`);
+    navigate(`/habitaciones`);
   };
+
+  // Filtra los hoteles en función de la ubicación de búsqueda
+  const filteredHoteles = hoteles.filter((hotel) =>
+    hotel.ubicacion_hotel.toLowerCase().includes(ubicacionBusqueda.toLowerCase())
+  );
+
+  // Categorización de hoteles por ubicación
+  const categoriasUbicacion = [...new Set(hoteles.map((hotel) => hotel.ubicacion_hotel))];
 
   return (
-    <div>
+    <div className="container">
       <h1>Hoteles</h1>
-      <ul>
-        <li><Link to="/">Inicio</Link></li>
-        <li><Link to="/Hoteles">Hoteles</Link></li>
-        <li><Link to="/Clientes">Clientes</Link></li>
-        <li><Link to="/Habitacion">Habitaciones</Link></li>
-        <li><Link to="/Reservacion">Reservaciones</Link></li>
-      </ul>
-      {/* Formulario para crear hoteles */}
-      <h2>Crear Hotel</h2>
-      {/* Implementa los campos y lógica de entrada del formulario aquí */}
-      <button onClick={createHotel}>Crear</button>
+      <div className="navbar">
+        <ul>
+          <li><Link to="/">Inicio</Link></li>
+          <li><Link to="/Hoteles">Hoteles</Link></li>
+          <li><Link to="/Clientes">Clientes</Link></li>
+          <li><Link to="/Reservacion">Reservaciones</Link></li>
+        </ul>
+      </div>
 
-      {/* Tabla para mostrar los hoteles */}
-      <h2>Hoteles</h2>
-      <table>
+      <h2>Categorías de Ubicación</h2>
+      <select className="locationCategories" onChange={handleSearchChange}>
+        <option value="">Todas</option>
+        {categoriasUbicacion.map((categoria, index) => (
+          <option key={index} value={categoria}>{categoria}</option>
+        ))}
+      </select>
+
+      <h2>Hoteles Disponibles</h2>
+      <table className="hotelTable">
         <thead>
           <tr>
-            <th>ID Hotel</th>
-            <th>Ubicación Hotel</th>
+            <th>Nombre</th>
+            <th>Ubicación</th>
             <th>Número de Habitaciones</th>
             <th>Categoría</th>
-            <th>Nombre</th>
             <th>Acciones</th>
           </tr>
         </thead>
         <tbody>
-          {hoteles.map((hotel) => (
+          {filteredHoteles.map((hotel) => (
             <tr key={hotel.id_hotel}>
-              <td>{hotel.id_hotel}</td>
+              <td>{hotel.nombre_hotel}</td>
               <td>{hotel.ubicacion_hotel}</td>
               <td>{hotel.numerohabitaciones_hotel}</td>
               <td>{hotel.categoria_hotel}</td>
-              <td>{hotel.nombre_hotel}</td>
               <td>
-                <button onClick={() => deleteHotel(hotel.id_hotel)}>Eliminar</button>
+                <button onClick={() => handleHotelSelection(hotel.id_hotel)}>Seleccionar</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      
     </div>
   );
 };

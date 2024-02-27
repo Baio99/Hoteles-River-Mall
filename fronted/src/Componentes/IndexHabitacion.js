@@ -2,40 +2,63 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const IndexHabitacion = () => {
-  // Estado para almacenar las habitaciones
   const [habitaciones, setHabitaciones] = useState([]);
 
-  // Efecto para cargar las habitaciones al montar el componente
   useEffect(() => {
+    // Cargar datos iniciales (simulando datos desde el servidor al montar el componente)
     updateHabitacionesTable();
-  }, []); // La dependencia vacía asegura que el efecto se ejecute solo una vez al montar el componente
+  }, []);
 
-  // Función para crear una nueva habitación
-  const createHabitacion = () => {
-    // Implementa la lógica de creación de habitaciones aquí
-    // Puedes utilizar fetch o axios para realizar una petición al servidor
-    // Actualiza el estado después de crear la habitación
-    updateHabitacionesTable();
+  const createHabitacion = async () => {
+    try {
+      // Simulando una solicitud de creación al servidor
+      const nuevaHabitacion = {
+        id_habitacion: habitaciones.length + 1,
+        id_hotel: 101,
+        tipo_habitacion: 'Individual',
+        precio_habitacion: 80,
+        disponibilidad_habitacion: 1,
+      };
+
+      // Simulando una respuesta exitosa del servidor
+      const habitacionesActualizadas = [...habitaciones, nuevaHabitacion];
+      setHabitaciones(habitacionesActualizadas);
+    } catch (error) {
+      console.error('Error al crear la habitación:', error);
+    }
   };
 
-  // Función para eliminar una habitación
-  const deleteHabitacion = (idHabitacion) => {
-    // Implementa la lógica de eliminación de habitaciones aquí
-    // Puedes utilizar fetch o axios para realizar una petición al servidor
-    // Actualiza el estado después de eliminar la habitación
-    updateHabitacionesTable();
+  const deleteHabitacion = async (idHabitacion) => {
+    try {
+      // Simulando una solicitud de eliminación al servidor
+      // En un entorno real, aquí deberías hacer una solicitud DELETE al servidor
+      // y manejar la respuesta del servidor
+
+      // Simulando una respuesta exitosa del servidor
+      const habitacionesActualizadas = habitaciones.filter(habitacion => habitacion.id_habitacion !== idHabitacion);
+      setHabitaciones(habitacionesActualizadas);
+    } catch (error) {
+      console.error('Error al eliminar la habitación:', error);
+    }
   };
 
-  // Función para cargar las habitaciones
-  const updateHabitacionesTable = () => {
-    // Implementa la lógica para obtener las habitaciones desde el servidor
-    // Puedes utilizar fetch o axios para realizar una petición al servidor
-    // Actualiza el estado con las habitaciones obtenidas
-    const mockHabitaciones = [
-      { id_habitacion: 1, id_hotel: 101, tipo_habitacion: 'Doble', precio_habitacion: 120, disponibilidad_habitacion: 1 },
-      // Otras habitaciones
-    ];
-    setHabitaciones(mockHabitaciones);
+  const updateHabitacionesTable = async () => {
+    try {
+      // Simulando una solicitud para obtener las habitaciones desde el servidor
+      // En un entorno real, aquí deberías hacer una solicitud GET al servidor
+      // y manejar la respuesta del servidor
+
+      // Simulando una respuesta exitosa del servidor
+      const habitacionesDesdeServidor = [
+        { id_habitacion: 1, id_hotel: 101, tipo_habitacion: 'Doble', precio_habitacion: 120, disponibilidad_habitacion: 1 },
+        { id_habitacion: 2, id_hotel: 101, tipo_habitacion: 'Suite', precio_habitacion: 200, disponibilidad_habitacion: 0 },
+        // ... Otras habitaciones
+      ];
+
+      setHabitaciones(habitacionesDesdeServidor);
+    } catch (error) {
+      console.error('Error al obtener las habitaciones:', error);
+    }
   };
 
   return (
@@ -51,7 +74,6 @@ const IndexHabitacion = () => {
 
       {/* Formulario para crear habitaciones */}
       <h2>Crear Habitación</h2>
-      {/* Implementa los campos y lógica de entrada del formulario aquí */}
       <button onClick={createHabitacion}>Crear</button>
 
       {/* Tabla para mostrar las habitaciones */}
