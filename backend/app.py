@@ -1,11 +1,19 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import cx_Oracle
-
+from fastapi.middleware.cors import CORSMiddleware
 # Configura la conexión a la base de datos Oracle
 connection = cx_Oracle.connect("academico/academico@Adrian-PC:1521/XE")
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Esto permitirá solicitudes desde cualquier origen
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"],
+)
 
 class Cliente(BaseModel):
     cedula_cliente: str
@@ -36,6 +44,16 @@ class Reservacion(BaseModel):
     estatus_res: str
     fechaingreso_res: str
     fechasalida_res: str
+
+
+@app.get("/")
+async def root():
+    return {"message": "Bienvenido a la API de hoteles"}
+
+@app.get("/favicon.ico")
+async def favicon():
+    # Aquí puedes devolver un ícono de favicon si lo tienes, o simplemente ignorar la solicitud
+    return
 
 
 
