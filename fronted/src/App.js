@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Total />} />
         <Route path="/Clientes" element={<Clientes />} />
         <Route path="/Reservacion" element={<Reservacion />} />
-        <Route path="/Habitacion" element={<Habitacion />} />
+        <Route path="/habitaciones/:id" element={<Habitacion />} /> {/* Definición de la ruta para habitaciones */}
         <Route path="/Hoteles" element={<Hotel />} />
       </Routes>
     </Router>

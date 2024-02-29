@@ -72,9 +72,7 @@ const IndexHabitacion = () => {
         <li><Link to="/Reservacion">Reservaciones</Link></li>
       </ul>
 
-      {/* Formulario para crear habitaciones */}
-      <h2>Crear Habitación</h2>
-      <button onClick={createHabitacion}>Crear</button>
+ 
 
       {/* Tabla para mostrar las habitaciones */}
       <h2>Habitaciones</h2>

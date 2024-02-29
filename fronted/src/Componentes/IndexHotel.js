@@ -20,9 +20,9 @@ const IndexHotel = () => {
   };
 
   const handleHotelSelection = (idHotel) => {
-    navigate(`/habitaciones/${idHotel}`);
+    navigate(`/habitaciones/${idHotel}`); // Aquí asegúrate de que idHotel sea el ID correcto del hotel seleccionado
   };
-
+  
   const filteredHoteles = hoteles.filter((hotel) =>
     hotel.ubicacion_hotel.toLowerCase().includes(ubicacionBusqueda.toLowerCase())
   );
