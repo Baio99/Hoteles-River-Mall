@@ -2,6 +2,7 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import cx_Oracle
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi import Path
 # Configura la conexión a la base de datos Oracle
 connection = cx_Oracle.connect("academico/academico@Adrian-PC:1521/XE")
 
@@ -154,7 +155,30 @@ async def create_habitacion(habitacion: Habitacion):
         return {"message": "Habitación creada exitosamente"}
     except cx_Oracle.Error as error:
         raise HTTPException(status_code=500, detail=f"Error al crear habitación: {error}")
+
+#habitaciones con idhotel
     
+@app.get("/habitaciones/{id_hotel}")
+async def get_habitaciones_by_hotel(id_hotel: str = Path(...)):
+    cursor = connection.cursor()
+    try:
+        cursor.execute("SELECT * FROM HABITACION WHERE ID_HOTEL = :id_hotel", {"id_hotel": id_hotel})
+        rows = cursor.fetchall()
+        habitaciones = []
+        for row in rows:
+            habitaciones.append({
+                "id_habitacion": row[0],
+                "id_hotel": row[1],
+                "tipo_habitacion": row[2],
+                "precio_habitacion": row[3],
+                "disponibilidad_habitacion": row[4]
+            })
+        return habitaciones
+    except cx_Oracle.Error as error:
+        raise HTTPException(status_code=500, detail=f"Error al obtener habitaciones del hotel: {error}")
+
+
+
 @app.post("/reservaciones/")
 async def create_reservacion(reservacion: Reservacion):
     cursor = connection.cursor()

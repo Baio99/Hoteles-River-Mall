@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import '../Estilos/IndexHotel.css'; // Asegúrate de tener la ruta correcta al archivo CSS
 
 const IndexHotel = () => {
   const navigate = useNavigate();
@@ -9,7 +8,7 @@ const IndexHotel = () => {
   const [ubicacionBusqueda, setUbicacionBusqueda] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:8000/hoteles') // Esto es la ruta de tu backend FastAPI
+    fetch('http://localhost:8000/hoteles')
       .then(response => response.json())
       .then(data => setHoteles(data))
       .catch(error => console.error('Error fetching hoteles:', error));
@@ -20,8 +19,9 @@ const IndexHotel = () => {
   };
 
   const handleHotelSelection = (idHotel) => {
-    navigate(`/habitaciones/${idHotel}`); // Aquí asegúrate de que idHotel sea el ID correcto del hotel seleccionado
-  };
+    console.log("ID del hotel seleccionado:", idHotel); // Imprime el ID del hotel seleccionado
+    navigate(`/habitaciones/${idHotel}`);
+};
   
   const filteredHoteles = hoteles.filter((hotel) =>
     hotel.ubicacion_hotel.toLowerCase().includes(ubicacionBusqueda.toLowerCase())
@@ -68,14 +68,14 @@ const IndexHotel = () => {
               <td>{hotel.numerohabitaciones_hotel}</td>
               <td>{hotel.categoria_hotel}</td>
               <td>
-                <button onClick={() => handleHotelSelection(hotel.id_hotel)}>Seleccionar</button>
+              
+               <button onClick={() => handleHotelSelection(hotel.id_hotel)}>Seleccionar</button>
+
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      
     </div>
   );
 };
