@@ -14,6 +14,9 @@ const FormularioCliente = ({ idHabitacion }) => {
   const handleClienteSubmit = async (e) => {
     e.preventDefault();
 
+      
+  
+
     const clienteData = {
       cedula_cliente: cedula,
       apellidos_cliente: apellido,
@@ -46,12 +49,16 @@ const FormularioCliente = ({ idHabitacion }) => {
   const handleReservacionSubmit = async (e) => {
     e.preventDefault();
 
+     // Ajustar el formato de las fechas al formato esperado en la base de datos (DD-MM-YYYY)
+     const fechaIngresoFormatted = formatDate(fechaIngreso);
+     const fechaSalidaFormatted = formatDate(fechaSalida);
+
     const reservacionData = {
       cedula_cliente: cedula,
       id_habitacion: idHabitacion,
       estatus_res: 'Pend', // Establecemos el estatus de la reserva como Pendiente
-      fechaingreso_res: fechaIngreso,
-      fechasalida_res: fechaSalida
+      fechaingreso_res: fechaIngresoFormatted,
+      fechasalida_res: fechaSalidaFormatted
     };
 
     try {
@@ -71,6 +78,12 @@ const FormularioCliente = ({ idHabitacion }) => {
     } catch (error) {
       console.error('Error en la solicitud:', error);
     }
+  };
+
+   // Función para ajustar el formato de la fecha
+   const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split('-');
+    return `${day}-${month}-${year}`;
   };
 
   return (
@@ -146,24 +159,24 @@ const FormularioCliente = ({ idHabitacion }) => {
           <h2>Confirmar Reserva</h2>
           {/* Campos del formulario para confirmar reservación */}
           <div>
-            <label htmlFor="fechaingreso_res">Fecha de Ingreso:</label>
-            <input
-              type="date"
-              id="fechaingreso_res"
-              value={fechaIngreso}
-              onChange={(e) => setFechaIngreso(e.target.value)}
-              required
-            />
+          <label htmlFor="fechaIngreso">Fecha de ingreso:</label>
+        <input
+          type="date"
+          id="fechaIngreso"
+          value={fechaIngreso}
+          onChange={(e) => setFechaIngreso(e.target.value)}
+          required
+        />
           </div>
           <div>
-            <label htmlFor="fechasalida_res">Fecha de Salida:</label>
-            <input
-              type="date"
-              id="fechasalida_res"
-              value={fechaSalida}
-              onChange={(e) => setFechaSalida(e.target.value)}
-              required
-            />
+          <label htmlFor="fechaSalida">Fecha de salida:</label>
+        <input
+          type="date"
+          id="fechaSalida"
+          value={fechaSalida}
+          onChange={(e) => setFechaSalida(e.target.value)}
+          required
+        />
           </div>
           <button type="submit">Confirmar Reserva</button>
         </form>

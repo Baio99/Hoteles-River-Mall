@@ -206,6 +206,7 @@ async def create_reservacion(reservacion: Reservacion):
         connection.commit()
         return {"message": "Reservación creada exitosamente"}
     except cx_Oracle.Error as error:
+        connection.rollback()  # Revertir cualquier cambio en caso de error
         raise HTTPException(status_code=500, detail=f"Error al crear reservación: {error}")
 
 
