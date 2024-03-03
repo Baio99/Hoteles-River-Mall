@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Importar el componente Link
 
 const FormularioCliente = ({ idHabitacion }) => {
   const [cedula, setCedula] = useState('');
@@ -201,6 +202,7 @@ const FormularioCliente = ({ idHabitacion }) => {
        
 
           <button type="submit">Confirmar Reserva</button>
+          <Link to="/Hoteles">Cancelar</Link> {/* Botón de Cancelar con redirección */}
         </form>
       )}
     </div>
