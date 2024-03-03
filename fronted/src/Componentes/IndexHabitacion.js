@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import Modal from 'react-modal';
+import { Link, useParams, useNavigate } from 'react-router-dom';
+import FormularioCliente from './FormularioCliente';
 
 const IndexHabitacion = () => {
-  const { idHotel } = useParams(); // Recuperar el ID del hotel de la URL
-
+  const { idHotel } = useParams();
+  const navigate = useNavigate();
   const [habitaciones, setHabitaciones] = useState([]);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [habitacionSeleccionada, setHabitacionSeleccionada] = useState(null);
-  const [clienteData, setClienteData] = useState({
-    nombres: '',
-    apellidos: '',
-    direccion: '',
-    telefono: '',
-    email: '',
-  });
+  const [selectedHabitacion, setSelectedHabitacion] = useState(null);
 
   useEffect(() => {
     fetchHabitaciones();
@@ -22,9 +14,8 @@ const IndexHabitacion = () => {
 
   const fetchHabitaciones = async () => {
     try {
-      const idHotel = window.location.pathname.split('/').pop(); // Obtener el ID del hotel de la URL
+      const idHotel = window.location.pathname.split('/').pop();
       const response = await fetch(`http://localhost:8000/habitaciones/${idHotel}`);
-
       if (!response.ok) {
         throw new Error('Error al obtener las habitaciones');
       }
@@ -35,47 +26,19 @@ const IndexHabitacion = () => {
     }
   };
 
-  const openModal = (habitacion) => {
-    setHabitacionSeleccionada(habitacion);
-    setModalIsOpen(true);
-  };
-
-  const closeModal = () => {
-    setHabitacionSeleccionada(null);
-    setModalIsOpen(false);
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setClienteData({
-      ...clienteData,
-      [name]: value,
-    });
-  };
-
-  const guardarCliente = async () => {
-    // Lógica para enviar los datos del cliente al servidor
-    console.log('Datos del cliente:', clienteData);
-
-    // Simulación de una solicitud al servidor (ajusta según tu lógica)
-    // await fetch('http://localhost:8000/clientes', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(clienteData),
-    // });
-
-    // Actualizar el estado y cerrar el modal
-    setHabitacionSeleccionada(null);
-    setModalIsOpen(false);
+  const handleSeleccionarCliente = (habitacion) => {
+    setSelectedHabitacion(habitacion);
   };
 
   return (
     <div>
       <h1>Habitaciones</h1>
       <ul>
-        {/* ... (otros enlaces) */}
+        <li><Link to="/">Inicio</Link></li>
+        <li><Link to="/Hoteles">Hoteles</Link></li>
+        <li><Link to="/Clientes">Clientes</Link></li>
+        <li><Link to="/Habitacion">Habitaciones</Link></li>
+        <li><Link to="/Reservacion">Reservaciones</Link></li>
       </ul>
 
       <h2>Habitaciones del Hotel ID: {idHotel}</h2>
@@ -99,53 +62,19 @@ const IndexHabitacion = () => {
               <td>{habitacion.precio_habitacion}</td>
               <td>{habitacion.disponibilidad_habitacion === 1 ? 'Disponible' : 'No disponible'}</td>
               <td>
-                {habitacionSeleccionada !== habitacion ? (
-                  <button onClick={() => openModal(habitacion)}>Reservar</button>
-                ) : (
-                  <button onClick={closeModal}>Cancelar Reserva</button>
-                )}
+                <button onClick={() => handleSeleccionarCliente(habitacion)}>Seleccionar</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
 
-      <Modal
-        isOpen={modalIsOpen}
-        onRequestClose={closeModal}
-        contentLabel="Formulario de Cliente"
-      >
-        <h2>Formulario de Cliente</h2>
-        <form onSubmit={(e) => e.preventDefault()}>
-          {/* Campos del formulario (nombre, correo, etc.) */}
-          <label>
-            Nombres:
-            <input type="text" name="nombres" value={clienteData.nombres} onChange={handleInputChange} />
-          </label>
-          <label>
-            Apellidos:
-            <input type="text" name="apellidos" value={clienteData.apellidos} onChange={handleInputChange} />
-          </label>
-          <label>
-            Dirección:
-            <input type="text" name="direccion" value={clienteData.direccion} onChange={handleInputChange} />
-          </label>
-          <label>
-            Teléfono:
-            <input type="text" name="telefono" value={clienteData.telefono} onChange={handleInputChange} />
-          </label>
-          <label>
-            Email:
-            <input type="text" name="email" value={clienteData.email} onChange={handleInputChange} />
-          </label>
-          <button onClick={closeModal}>
-            Cancelar
-          </button>
-          <button onClick={guardarCliente}>
-            Guardar Cliente
-          </button>
-        </form>
-      </Modal>
+      {selectedHabitacion && (
+        <div>
+          <h3>Reservar habitación {selectedHabitacion.id_habitacion}</h3>
+          <FormularioCliente idHabitacion={selectedHabitacion.id_habitacion} />
+        </div>
+      )}
     </div>
   );
 };

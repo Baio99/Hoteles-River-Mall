@@ -5,6 +5,7 @@ import Total from './Componentes/IndexTotal';
 import Reservacion from './Componentes/IndexReservacion';
 import Habitacion from './Componentes/IndexHabitacion';
 import Hotel from './Componentes/IndexHotel';
+import FormularioCliente from './Componentes/FormularioCliente';
 
 function App() {
   return (
@@ -13,7 +14,8 @@ function App() {
         <Route path="/" element={<Total />} />
         <Route path="/Clientes" element={<Clientes />} />
         <Route path="/Reservacion" element={<Reservacion />} />
-        <Route path="/habitaciones/:id" element={<Habitacion />} /> {/* Definición de la ruta para habitaciones */}
+        <Route path="/habitaciones/:id" element={<Habitacion />} />
+        <Route path="/Reservacion/:habitacionId" element={<FormularioCliente />} />
         <Route path="/Hoteles" element={<Hotel />} />
       </Routes>
     </Router>

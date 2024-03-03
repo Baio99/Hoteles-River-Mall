@@ -4,7 +4,7 @@ import cx_Oracle
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi import Path
 # Configura la conexión a la base de datos Oracle
-connection = cx_Oracle.connect("academico/academico@Adrian-PC:1521/XE")
+connection = cx_Oracle.connect("academico/academico@localhost:1521/XE")
 
 app = FastAPI()
 
@@ -58,6 +58,7 @@ async def favicon():
 
 
 
+# Ruta para guardar un cliente
 @app.post("/clientes/")
 async def create_cliente(cliente: Cliente):
     cursor = connection.cursor()

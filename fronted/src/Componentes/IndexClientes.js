@@ -115,6 +115,8 @@ const Cliente = () => {
       <ul>
         <li><Link to="/">Inicio</Link></li>
         <li><Link to="/Hoteles">Hoteles</Link></li>
+        <li><Link to="/Clientes">Clientes</Link></li>
+        <li><Link to="/Habitacion">Habitaciones</Link></li>
         <li><Link to="/Reservacion">Reservaciones</Link></li>
       </ul>
 
@@ -126,6 +128,59 @@ const Cliente = () => {
       </div>
 
       {/* ... Resto del código del formulario ... */}
+
+      <div class="form-group">
+        <label>Apellidos Cliente:</label>
+        <input type="text" id="apellidos_cliente" />
+    </div>
+    <div class="form-group">
+        <label>Nombres Cliente:</label>
+        <input type="text" id="nombres_cliente" />
+    </div>
+    <div class="form-group">
+        <label>Dirección Cliente:</label>
+        <input type="text" id="direccion_cliente" />
+    </div>
+    <div class="form-group">
+        <label>Teléfono Cliente:</label>
+        <input type="text" id="telefono_cliente"  />
+        <span id="telefono_error" style={{ color: 'red', display: 'none' }}>El teléfono debe contener solo números</span>
+
+    </div>
+
+  
+    <div class="form-group">
+        <label>Email Cliente:</label>
+        <input type="text" id="email_cliente" />
+    </div>
+  
+    <div class="form-group">
+        <input type="submit" value="Crear" onclick="createCliente()" />
+    </div>
+
+
+<h2>Clientes</h2>
+    <table id="clientesTable">
+        <thead>
+            <tr>
+                <th>Cédula Cliente</th>
+                <th>Apellidos Cliente</th>
+                <th>Nombres Cliente</th>
+                <th>Dirección Cliente</th>
+                <th>Teléfono Cliente</th>
+                <th>Email Cliente</th>
+                <th>Número de Cuenta</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        </tbody>
+    </table>
+
+
+
+    
 
       <div className="result" id="createResult">{createResult}</div>
       <footer className="text-center text-white fixed-bottom" style={{ backgroundColor: '#0b0409' }}>
