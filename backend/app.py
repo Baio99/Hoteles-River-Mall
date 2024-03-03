@@ -180,6 +180,21 @@ async def get_habitaciones_by_hotel(id_hotel: str = Path(...)):
 
 
 
+#@app.post("/reservaciones/")
+#async def create_reservacion(reservacion: Reservacion):
+#    cursor = connection.cursor()
+#    try:
+#        cursor.execute("""
+#            INSERT INTO RESERVACION (CEDULA_CLIENTE, ID_HABITACION, ESTATUS_RES, FECHAINGRESO_RES, FECHASALIDA_RES)
+#            VALUES (:cedula_cliente, :id_habitacion, :estatus_res, TO_DATE(:fechaingreso_res, 'DD-MM-YYYY'), TO_DATE(:fechasalida_res, 'DD-MM-YYYY'))
+#        """, reservacion.dict())
+#        connection.commit()
+#        return {"message": "Reservación creada exitosamente"}
+#    except cx_Oracle.Error as error:
+#        raise HTTPException(status_code=500, detail=f"Error al crear reservación: {error}")
+    
+
+
 @app.post("/reservaciones/")
 async def create_reservacion(reservacion: Reservacion):
     cursor = connection.cursor()
@@ -192,6 +207,7 @@ async def create_reservacion(reservacion: Reservacion):
         return {"message": "Reservación creada exitosamente"}
     except cx_Oracle.Error as error:
         raise HTTPException(status_code=500, detail=f"Error al crear reservación: {error}")
+
 
 @app.get("/reservaciones/")
 async def get_reservaciones():
