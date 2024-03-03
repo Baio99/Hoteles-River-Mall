@@ -115,9 +115,6 @@ const Cliente = () => {
       <ul>
         <li><Link to="/">Inicio</Link></li>
         <li><Link to="/Hoteles">Hoteles</Link></li>
-        <li><Link to="/Clientes">Clientes</Link></li>
-        <li><Link to="/Habitacion">Habitaciones</Link></li>
-        <li><Link to="/Reservacion">Reservaciones</Link></li>
       </ul>
 
       <h2>Crear Cliente</h2>

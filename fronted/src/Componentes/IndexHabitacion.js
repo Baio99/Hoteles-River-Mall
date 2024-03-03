@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
 import FormularioCliente from './FormularioCliente';
+import '../Estilos/IndexHabitacion.css';
 
 const IndexHabitacion = () => {
   const { idHotel } = useParams();
@@ -36,9 +37,6 @@ const IndexHabitacion = () => {
       <ul>
         <li><Link to="/">Inicio</Link></li>
         <li><Link to="/Hoteles">Hoteles</Link></li>
-        <li><Link to="/Clientes">Clientes</Link></li>
-        <li><Link to="/Habitacion">Habitaciones</Link></li>
-        <li><Link to="/Reservacion">Reservaciones</Link></li>
       </ul>
 
       <h2>Habitaciones del Hotel ID: {idHotel}</h2>

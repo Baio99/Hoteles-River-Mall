@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../Estilos/IndexReservacion.css';
 
 const IndexReservacion = () => {
   // Estado para almacenar las reservaciones
@@ -44,7 +45,6 @@ const IndexReservacion = () => {
       <ul>
         <li><Link to="/">Inicio</Link></li>
         <li><Link to="/Hoteles">Hoteles</Link></li>
-        <li><Link to="/Reservacion">Reservaciones</Link></li>
       </ul>
 
       {/* Formulario para crear reservaciones */}

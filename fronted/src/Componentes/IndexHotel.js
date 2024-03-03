@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import '../Estilos/IndexHotel.css';
 
 const IndexHotel = () => {
   const navigate = useNavigate();
@@ -36,7 +37,6 @@ const IndexHotel = () => {
         <ul>
           <li><Link to="/">Inicio</Link></li>
           <li><Link to="/Hoteles">Hoteles</Link></li>
-          <li><Link to="/Reservacion">Reservaciones</Link></li>
         </ul>
       </div>
 

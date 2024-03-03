@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom'; // Importar el componente Link
+import { useNavigate } from 'react-router-dom';
+
 
 const FormularioCliente = ({ idHabitacion }) => {
   const [cedula, setCedula] = useState('');
@@ -13,8 +15,25 @@ const FormularioCliente = ({ idHabitacion }) => {
   const [fechaSalida, setFechaSalida] = useState('');
   const [estatusRes, setEstatusRes] = useState('Pend'); // Valor predeterminado 'Pend'
   //const [mostrarEstadoReservacion, setMostrarEstadoReservacion] = useState(false); // Estado para controlar la visibilidad del campo Estado Reservación
+  const [showModal, setShowModal] = useState(false); // Estado para controlar si se muestra el modal
+  const navigate = useNavigate(); // Hook useNavigate para la navegación
 
-
+// Componente de modal para mostrar los datos del usuario
+const ModalDatosUsuario = ({ cedula, nombre, fechaIngreso, fechaSalida, tipoHabitacion, onClose }) => {
+  return (
+    <div className="modal-background">
+      <div className="modal-content">
+        <h2>Datos Usuario</h2>
+        <p>Cédula: {cedula}</p>
+        <p>Nombre: {nombre}</p>
+        <p>Fecha de Ingreso: {fechaIngreso}</p>
+        <p>Fecha de Salida: {fechaSalida}</p>
+        <p>Tipo de Habitación: {tipoHabitacion}</p>
+        <button onClick={onClose}>Cerrar</button>
+      </div>
+    </div>
+  );
+};
 
   const handleClienteSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +75,7 @@ const FormularioCliente = ({ idHabitacion }) => {
   const handleReservacionSubmit = async (e) => {
     e.preventDefault();
     setEstatusRes('Conf');
+    
 
      // Ajustar el formato de las fechas al formato esperado en la base de datos (DD-MM-YYYY)
      const fechaIngresoFormatted = formatDate(fechaIngreso);
@@ -81,6 +101,7 @@ const FormularioCliente = ({ idHabitacion }) => {
 
       if (response.ok) {
         console.log('Reservación creada exitosamente');
+        setShowModal(true); // Mostrar el modal después de confirmar la reserva
       } else {
         console.error('Error al crear la reservación:', response.statusText);
       }
@@ -93,6 +114,16 @@ const FormularioCliente = ({ idHabitacion }) => {
    const formatDate = (dateString) => {
     const [year, month, day] = dateString.split('-');
     return `${day}-${month}-${year}`;
+
+  };
+
+  const handleCancelar = () => {
+    navigate('/Hoteles'); // Navegar a la ruta '/Hoteles '
+  };
+
+  const handleCloseModal = () => {
+    // Cerrar el modal cambiando el estado
+    setShowModal(false);
   };
   
 
@@ -202,9 +233,25 @@ const FormularioCliente = ({ idHabitacion }) => {
        
 
           <button type="submit">Confirmar Reserva</button>
-          <Link to="/Hoteles">Cancelar</Link> {/* Botón de Cancelar con redirección */}
+          <button type="button" onClick={handleCancelar}>Cancelar</button>
         </form>
       )}
+
+  {/* Modal de datos del usuario */}
+  {showModal && (
+        <div className="modal-background">
+          <div className="modal-content">
+            <h2>Datos Usuario</h2>
+            <p>Cédula: {cedula}</p>
+            <p>Nombre: {nombre}</p>
+            <p>Fecha de Ingreso: {fechaIngreso}</p>
+            <p>Fecha de Salida: {fechaSalida}</p>
+            <p>Tipo de Habitación: {idHabitacion}</p>
+            <button onClick={() => setShowModal(false)}>Cerrar</button>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 };
