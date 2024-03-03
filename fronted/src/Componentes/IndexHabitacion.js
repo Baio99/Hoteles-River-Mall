@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
+import Modal from 'react-modal';
 import FormularioCliente from './FormularioCliente';
 import '../Estilos/IndexHabitacion.css';
 
@@ -8,6 +9,7 @@ const IndexHabitacion = () => {
   const navigate = useNavigate();
   const [habitaciones, setHabitaciones] = useState([]);
   const [selectedHabitacion, setSelectedHabitacion] = useState(null);
+  const [modalIsOpen, setModalIsOpen] = useState(false);
 
   useEffect(() => {
     fetchHabitaciones();
@@ -29,6 +31,19 @@ const IndexHabitacion = () => {
 
   const handleSeleccionarCliente = (habitacion) => {
     setSelectedHabitacion(habitacion);
+    openModal();
+  };
+
+  const openModal = () => {
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+  };
+
+  const handleCancelar = () => {
+    navigate('/Hoteles'); // Navegar a la ruta '/Hoteles '
   };
 
   return (
@@ -67,12 +82,21 @@ const IndexHabitacion = () => {
         </tbody>
       </table>
 
-      {selectedHabitacion && (
+      <Modal
+        isOpen={modalIsOpen}
+        onRequestClose={closeModal}
+        contentLabel="Reservar habitación"
+      >
         <div>
-          <h3>Reservar habitación {selectedHabitacion.id_habitacion}</h3>
-          <FormularioCliente idHabitacion={selectedHabitacion.id_habitacion} />
+          {selectedHabitacion && (
+            <div>
+              <h3>Reservar habitación {selectedHabitacion.id_habitacion}</h3>
+              <FormularioCliente idHabitacion={selectedHabitacion.id_habitacion} />
+              <button onClick={handleCancelar}>Cerrar</button>
+            </div>
+          )}
         </div>
-      )}
+      </Modal>
     </div>
   );
 };

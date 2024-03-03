@@ -29,7 +29,7 @@ const ModalDatosUsuario = ({ cedula, nombre, fechaIngreso, fechaSalida, tipoHabi
         <p>Fecha de Ingreso: {fechaIngreso}</p>
         <p>Fecha de Salida: {fechaSalida}</p>
         <p>Tipo de Habitación: {tipoHabitacion}</p>
-        <button onClick={onClose}>Cerrar</button>
+      
       </div>
     </div>
   );
@@ -39,10 +39,6 @@ const ModalDatosUsuario = ({ cedula, nombre, fechaIngreso, fechaSalida, tipoHabi
     e.preventDefault();
     // Cambiar el estatus_res a 'Conf' al confirmar la reserva
     
-
-      
-  
-
     const clienteData = {
       cedula_cliente: cedula,
       apellidos_cliente: apellido,
@@ -118,6 +114,7 @@ const ModalDatosUsuario = ({ cedula, nombre, fechaIngreso, fechaSalida, tipoHabi
   };
 
   const handleCancelar = () => {
+    setShowModal(false);
     navigate('/Hoteles'); // Navegar a la ruta '/Hoteles '
   };
 
@@ -229,11 +226,8 @@ const ModalDatosUsuario = ({ cedula, nombre, fechaIngreso, fechaSalida, tipoHabi
               readOnly // Hacer que el campo sea de solo lectura
             />
           </div>
-        
-       
 
-          <button type="submit">Confirmar Reserva</button>
-          <button type="button" onClick={handleCancelar}>Cancelar</button>
+          {!showModal && <button type="submit">Confirmar Reserva</button>}
         </form>
       )}
 
@@ -247,11 +241,10 @@ const ModalDatosUsuario = ({ cedula, nombre, fechaIngreso, fechaSalida, tipoHabi
             <p>Fecha de Ingreso: {fechaIngreso}</p>
             <p>Fecha de Salida: {fechaSalida}</p>
             <p>Tipo de Habitación: {idHabitacion}</p>
-            <button onClick={() => setShowModal(false)}>Cerrar</button>
+          
           </div>
         </div>
       )}
-
     </div>
   );
 };
