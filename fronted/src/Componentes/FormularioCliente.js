@@ -10,9 +10,15 @@ const FormularioCliente = ({ idHabitacion }) => {
   const [reservaConfirmada, setReservaConfirmada] = useState(false);
   const [fechaIngreso, setFechaIngreso] = useState('');
   const [fechaSalida, setFechaSalida] = useState('');
+  const [estatusRes, setEstatusRes] = useState('Pend'); // Valor predeterminado 'Pend'
+  //const [mostrarEstadoReservacion, setMostrarEstadoReservacion] = useState(false); // Estado para controlar la visibilidad del campo Estado Reservación
+
+
 
   const handleClienteSubmit = async (e) => {
     e.preventDefault();
+    // Cambiar el estatus_res a 'Conf' al confirmar la reserva
+    
 
       
   
@@ -48,6 +54,7 @@ const FormularioCliente = ({ idHabitacion }) => {
 
   const handleReservacionSubmit = async (e) => {
     e.preventDefault();
+    setEstatusRes('Conf');
 
      // Ajustar el formato de las fechas al formato esperado en la base de datos (DD-MM-YYYY)
      const fechaIngresoFormatted = formatDate(fechaIngreso);
@@ -56,7 +63,8 @@ const FormularioCliente = ({ idHabitacion }) => {
     const reservacionData = {
       cedula_cliente: cedula,
       id_habitacion: idHabitacion,
-      estatus_res: 'Pend', // Establecemos el estatus de la reserva como Pendiente
+      //estatus_res: 'Pend', // Establecemos el estatus de la reserva como Pendiente
+      estatus_res: 'Conf', // Usar el estado actual de estatus_res
       fechaingreso_res: fechaIngresoFormatted,
       fechasalida_res: fechaSalidaFormatted
     };
@@ -85,6 +93,7 @@ const FormularioCliente = ({ idHabitacion }) => {
     const [year, month, day] = dateString.split('-');
     return `${day}-${month}-${year}`;
   };
+  
 
   return (
     <div>
@@ -178,6 +187,19 @@ const FormularioCliente = ({ idHabitacion }) => {
           required
         />
           </div>
+
+          <div>
+            <label htmlFor="estadoReservacion">Estado Reservación:</label>
+            <input
+              type="text"
+              id="estadoReservacion"
+              value={estatusRes}
+              readOnly // Hacer que el campo sea de solo lectura
+            />
+          </div>
+        
+       
+
           <button type="submit">Confirmar Reserva</button>
         </form>
       )}
