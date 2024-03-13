@@ -107,12 +107,11 @@ const FormularioCliente = ({ idHabitacion }) => {
     }
   };
 
-  // Función para ajustar el formato de la fecha
-  const formatDate = (dateString) => {
-    const [year, month, day] = dateString.split('-');
-    return `${day}-${month}-${year}`;
-
-  };
+// Función para ajustar el formato de la fecha
+const formatDate = (dateString) => {
+  const [year, month, day] = dateString.split('-');
+  return `${day}-${month}-${year}`;
+};
 
   const handleCancelar = () => {
     setShowModal(false);
@@ -137,7 +136,18 @@ const FormularioCliente = ({ idHabitacion }) => {
               type="text"
               id="cedula_cliente"
               value={cedula}
-              onChange={(e) => setCedula(e.target.value)}
+              onChange={(e) => {
+                let value = e.target.value;
+                // Limitar a 10 dígitos
+                if (value.length > 10) {
+                  value = value.slice(0, 10);
+                }
+                // Validar que solo sean números
+                if (!isNaN(value) || value === '') {
+                  setCedula(value);
+                }
+              }}
+              placeholder="1234567890"
               required
               style={{ marginLeft: '30px', border: '1px solid #ccc', borderRadius: '5px', padding: '3px' }}
             />
@@ -148,7 +158,13 @@ const FormularioCliente = ({ idHabitacion }) => {
               type="text"
               id="apellido"
               value={apellido}
-              onChange={(e) => setApellido(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Validar que solo sean letras
+                if (/^[a-zA-Z]+$/.test(value) || value === '') {
+                  setApellido(value);
+                }
+              }}
               required
               style={{ marginLeft: '22px', border: '1px solid #ccc', borderRadius: '5px', padding: '3px' }}
             />
@@ -159,7 +175,13 @@ const FormularioCliente = ({ idHabitacion }) => {
               type="text"
               id="nombre"
               value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Validar que solo sean letras
+                if (/^[a-zA-Z]+$/.test(value) || value === '') {
+                  setNombre(value);
+                }
+              }}
               required
               style={{ marginLeft: '22px', border: '1px solid #ccc', borderRadius: '5px', padding: '3px' }}
             />
@@ -181,7 +203,13 @@ const FormularioCliente = ({ idHabitacion }) => {
               type="tel"
               id="telefono"
               value={telefono}
-              onChange={(e) => setTelefono(e.target.value)}
+              onChange={(e) => {
+                const value = e.target.value;
+                // Validar que solo sean números
+                if (/^[0-9]*$/.test(value) || value === '') {
+                  setTelefono(value);
+                }
+              }}
               required
               style={{ marginLeft: '20px', border: '1px solid #ccc', borderRadius: '5px', padding: '3px' }}
             />
